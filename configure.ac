@@ -1,0 +1,17 @@
+AC_INIT([nebredis], [0.1])
+AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror])
+AM_PROG_AR
+LT_INIT
+
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
+AC_PROG_CC
+AM_PROG_CC_C_O
+
+AC_SUBST([AM_CPPFLAGS])
+AC_CONFIG_FILES([
+	Makefile
+	])
+AC_OUTPUT
