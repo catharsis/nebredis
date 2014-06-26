@@ -3,8 +3,9 @@ AM_CPPFLAGS += -I$(top_srcdir) -I/usr/local/include/hiredis -I/home/alofgren/rep
 pkglib_LTLIBRARIES = nebredis.la
 nebredis_la_LDFLAGS = -module -avoid-version -shared -Wl,-rpath=/usr/local/lib
 nebredis_la_LIBADD = -lhiredis -L/usr/local/lib
-nebredis_la_SOURCES = src/module.c src/nebredis.c
-
+nebredis_la_SOURCES = src/module.c src/module.h \
+					  src/nebredis.c src/nebredis.h \
+					  src/serialize.c src/serialize.h
 #bin_PROGRAMS = nebredissa
 #nebredissa_LDFLAGS = -Wl,-rpath=/usr/local/lib
 #nebredissa_LDADD = -lhiredis -L/usr/local/lib
