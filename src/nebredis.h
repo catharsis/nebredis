@@ -1,7 +1,7 @@
 #ifndef NEBREDIS_H
 #define NEBREDIS_H
-#include <hiredis.h>
-#include <naemon.h>
+#include <hiredis/hiredis.h>
+#include <naemon/naemon.h>
 struct nebredis_server_t;
 
 void nebredis_server_destroy(struct nebredis_server_t * server);

@@ -1,6 +1,6 @@
 #ifndef COMMAND_FMT_H
 #define COMMAND_FMT_H
-#include <naemon.h>
+#include <naemon/naemon.h>
 #include "nebredis.h"
 struct nebredis_hm_command_t;
 void nebredis_hm_command_free(struct nebredis_hm_command_t *cmd);

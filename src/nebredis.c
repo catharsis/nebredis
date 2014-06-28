@@ -2,7 +2,8 @@
 #include <stdarg.h>
 #include <string.h>
 #include <stdbool.h>
-#include <naemon.h>
+#include <hiredis/hiredis.h>
+#include <naemon/naemon.h>
 #include "nebredis.h"
 #include "xalloc.h"
 #include "command_fmt.h"
