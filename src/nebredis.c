@@ -86,28 +86,11 @@ enum NebredisError nebredis_command_hmset(struct nebredis_server_t * server, str
 	return E_OK;
 }
 
-int nebredis_submit_host_status_data(struct nebredis_server_t * server, nebstruct_host_status_data *ds) {
+int nebredis_submit_nebstruct(struct nebredis_server_t * server, struct nebredis_hm_command_t *(*command_format_fn)(void*), void *data) {
 	struct nebredis_hm_command_t * cmd = NULL;
 	int ret = 0;
-
-	if ((cmd = nebredis_command_format_hm_host((struct host *) ds->object_ptr)) == NULL) {
-		NEBREDIS_ERROR("Failed to command format host struct");
-		ret = -1;
-	}
-	else if ((nebredis_command_hmset(server, cmd) != E_OK)) {
-		NEBREDIS_ERROR(nebredis_server_errstr(server));
-		ret = -2;
-	}
-	nebredis_hm_command_free(cmd);
-	return ret;
-}
-
-int nebredis_submit_service_status_data(struct nebredis_server_t * server, nebstruct_service_status_data *ds) {
-	struct nebredis_hm_command_t* cmd = NULL;
-	int ret = 0;
-
-	if ((cmd = nebredis_command_format_hm_service((struct service *) ds->object_ptr)) == NULL) {
-		NEBREDIS_ERROR("Failed to command format service struct");
+	if ((cmd = command_format_fn(data)) == NULL) {
+		NEBREDIS_ERROR("Failed to command-format nebstruct");
 		ret = -1;
 	}
 	else if ((nebredis_command_hmset(server, cmd) != E_OK)) {

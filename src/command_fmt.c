@@ -86,10 +86,41 @@ static struct nebredis_hm_command_t * nebredis_hm_command_create(const char *key
 	return cmd;
 }
 
-struct nebredis_hm_command_t * nebredis_command_format_hm_host(struct host *hst) {
-	if (!hst) {
+struct nebredis_hm_command_t * nebredis_command_format_hm_program(void * prog_p) {
+	if (!prog_p) {
 		return NULL;
 	}
+	nebstruct_program_status_data *prog = (nebstruct_program_status_data *)prog_p;
+	char *key = "program:status";
+	struct nebredis_hm_command_t *cmd = NULL;
+	cmd = nebredis_hm_command_create(key);
+	nebredis_hm_command_add_field_value(cmd, "program_start", NEBREDIS_T_ULONG, &prog->program_start);
+	
+	nebredis_hm_command_add_field_value(cmd, "pid", NEBREDIS_T_INTEGER, &prog->pid);
+	nebredis_hm_command_add_field_value(cmd, "daemon_mode", NEBREDIS_T_INTEGER, &prog->daemon_mode);
+	nebredis_hm_command_add_field_value(cmd, "last_log_rotation", NEBREDIS_T_ULONG, &prog->last_log_rotation);
+	nebredis_hm_command_add_field_value(cmd, "notifications_enabled", NEBREDIS_T_INTEGER, &prog->notifications_enabled);
+	nebredis_hm_command_add_field_value(cmd, "active_service_checks_enabled", NEBREDIS_T_INTEGER, &prog->active_service_checks_enabled);
+	nebredis_hm_command_add_field_value(cmd, "passive_service_checks_enabled", NEBREDIS_T_INTEGER, &prog->passive_service_checks_enabled);
+	nebredis_hm_command_add_field_value(cmd, "active_host_checks_enabled", NEBREDIS_T_INTEGER, &prog->active_host_checks_enabled);
+	nebredis_hm_command_add_field_value(cmd, "passive_host_checks_enabled", NEBREDIS_T_INTEGER, &prog->passive_host_checks_enabled);
+	nebredis_hm_command_add_field_value(cmd, "event_handlers_enabled", NEBREDIS_T_INTEGER, &prog->event_handlers_enabled);
+	nebredis_hm_command_add_field_value(cmd, "flap_detection_enabled", NEBREDIS_T_INTEGER, &prog->flap_detection_enabled);
+	nebredis_hm_command_add_field_value(cmd, "process_performance_data", NEBREDIS_T_INTEGER, &prog->process_performance_data);
+	nebredis_hm_command_add_field_value(cmd, "obsess_over_hosts", NEBREDIS_T_INTEGER, &prog->obsess_over_hosts);
+	nebredis_hm_command_add_field_value(cmd, "obsess_over_services", NEBREDIS_T_INTEGER, &prog->obsess_over_services);
+	nebredis_hm_command_add_field_value(cmd, "modified_host_attributes", NEBREDIS_T_INTEGER, &prog->modified_host_attributes);
+	nebredis_hm_command_add_field_value(cmd, "modified_service_attributes", NEBREDIS_T_INTEGER, &prog->modified_service_attributes);
+	nebredis_hm_command_add_field_value(cmd, "global_host_event_handler", NEBREDIS_T_STR, prog->global_host_event_handler);
+	nebredis_hm_command_add_field_value(cmd, "global_service_event_handler", NEBREDIS_T_STR, prog->global_service_event_handler);
+
+	return cmd;
+}
+struct nebredis_hm_command_t * nebredis_command_format_hm_host(void *hst_p) {
+	if (!hst_p) {
+		return NULL;
+	}
+	struct host *hst = (struct host *)hst_p;
 	char *key = NULL;
 	struct nebredis_hm_command_t *cmd = NULL;
 	xasprintf(&key, "host:%s", hst->name);
@@ -194,11 +225,12 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_host(struct host *hst)
 
 }
 
-struct nebredis_hm_command_t * nebredis_command_format_hm_service(struct service *svc) {
-	if (!svc) {
+struct nebredis_hm_command_t * nebredis_command_format_hm_service(void *svc_p) {
+	if (!svc_p) {
 		return NULL;
 
 	}
+	struct service *svc = (struct service *)svc_p;
 	char *key = NULL;
 
 	struct nebredis_hm_command_t *cmd = NULL;
@@ -302,3 +334,97 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_service(struct service
 
 }
 
+struct nebredis_hm_command_t * nebredis_command_format_hm_contact(void *contact_p) {
+	if (!contact_p) {
+		return NULL;
+
+	}
+	struct contact *contact = (struct contact *)contact_p;
+	char *key = NULL;
+
+	struct nebredis_hm_command_t *cmd = NULL;
+
+	xasprintf(&key, "contact:%s", contact->name);
+
+	cmd = nebredis_hm_command_create(key);
+	xfree(key);
+	nebredis_hm_command_add_field_value(cmd, "id", NEBREDIS_T_UINT, &contact->id);
+	nebredis_hm_command_add_field_value(cmd, "name", NEBREDIS_T_STR, contact->name);
+	nebredis_hm_command_add_field_value(cmd, "alias", NEBREDIS_T_STR, contact->alias);
+	nebredis_hm_command_add_field_value(cmd, "email", NEBREDIS_T_STR, contact->email);
+	nebredis_hm_command_add_field_value(cmd, "pager", NEBREDIS_T_STR, contact->pager);
+	nebredis_hm_command_add_field_value(cmd, "host_notification_options", NEBREDIS_T_UINT, &contact->host_notification_options);
+	nebredis_hm_command_add_field_value(cmd, "service_notification_options", NEBREDIS_T_UINT, &contact->service_notification_options);
+	nebredis_hm_command_add_field_value(cmd, "minimum_value", NEBREDIS_T_UINT, &contact->minimum_value);
+	nebredis_hm_command_add_field_value(cmd, "host_notification_period", NEBREDIS_T_STR, contact->host_notification_period);
+	nebredis_hm_command_add_field_value(cmd, "service_notification_period", NEBREDIS_T_STR, contact->service_notification_period);
+	nebredis_hm_command_add_field_value(cmd, "host_notifications_enabled", NEBREDIS_T_INTEGER, &contact->host_notifications_enabled);
+	nebredis_hm_command_add_field_value(cmd, "service_notifications_enabled", NEBREDIS_T_INTEGER, &contact->service_notifications_enabled);
+	nebredis_hm_command_add_field_value(cmd, "can_submit_commands", NEBREDIS_T_INTEGER, &contact->can_submit_commands);
+	nebredis_hm_command_add_field_value(cmd, "retain_status_information", NEBREDIS_T_INTEGER, &contact->retain_status_information);
+	nebredis_hm_command_add_field_value(cmd, "retain_nonstatus_information", NEBREDIS_T_INTEGER, &contact->retain_nonstatus_information);
+	nebredis_hm_command_add_field_value(cmd, "last_host_notification", NEBREDIS_T_ULONG, &contact->last_host_notification);
+	nebredis_hm_command_add_field_value(cmd, "last_service_notification", NEBREDIS_T_ULONG, &contact->last_service_notification);
+	nebredis_hm_command_add_field_value(cmd, "modified_attributes", NEBREDIS_T_ULONG, &contact->modified_attributes);
+	nebredis_hm_command_add_field_value(cmd, "modified_host_attributes", NEBREDIS_T_ULONG, &contact->modified_host_attributes);
+	nebredis_hm_command_add_field_value(cmd, "modified_service_attributes", NEBREDIS_T_ULONG, &contact->modified_service_attributes);
+	return cmd;
+}
+
+struct nebredis_hm_command_t * nebredis_command_format_hm_comment(void *comment_p) {
+	if (!comment_p) {
+		return NULL;
+
+	}
+	nebstruct_comment_data *comment = (nebstruct_comment_data *)comment_p;
+	char *key = NULL;
+
+	struct nebredis_hm_command_t *cmd = NULL;
+	xasprintf(&key, "comments:%ul", comment->comment_id);
+
+	cmd = nebredis_hm_command_create(key);
+	xfree(key);
+	
+	nebredis_hm_command_add_field_value(cmd, "comment_type", NEBREDIS_T_INTEGER, &comment->comment_type);
+	nebredis_hm_command_add_field_value(cmd, "host_name", NEBREDIS_T_STR, comment->host_name);
+	nebredis_hm_command_add_field_value(cmd, "service_description", NEBREDIS_T_STR, comment->service_description);
+	nebredis_hm_command_add_field_value(cmd, "entry_time", NEBREDIS_T_ULONG, &comment->entry_time);
+	nebredis_hm_command_add_field_value(cmd, "author_name", NEBREDIS_T_STR, comment->author_name);
+	nebredis_hm_command_add_field_value(cmd, "comment_data", NEBREDIS_T_STR, comment->comment_data);
+	nebredis_hm_command_add_field_value(cmd, "persistent", NEBREDIS_T_INTEGER, &comment->persistent);
+	nebredis_hm_command_add_field_value(cmd, "source", NEBREDIS_T_INTEGER, &comment->source);
+	nebredis_hm_command_add_field_value(cmd, "entry_type", NEBREDIS_T_INTEGER, &comment->entry_type);
+	nebredis_hm_command_add_field_value(cmd, "expires", NEBREDIS_T_INTEGER, &comment->expires);
+	nebredis_hm_command_add_field_value(cmd, "expire_time", NEBREDIS_T_ULONG, &comment->expire_time);
+	nebredis_hm_command_add_field_value(cmd, "comment_id", NEBREDIS_T_ULONG, &comment->comment_id);
+	return cmd;
+}
+
+struct nebredis_hm_command_t * nebredis_command_format_hm_downtime(void *downtime_p) {
+	if (!downtime_p) {
+		return NULL;
+	}
+
+	nebstruct_downtime_data *downtime = (nebstruct_downtime_data *)downtime_p;
+	char *key = NULL;
+
+	struct nebredis_hm_command_t *cmd = NULL;
+	xasprintf(&key, "downtime:%ul", downtime->downtime_id);
+	cmd = nebredis_hm_command_create(key);
+	xfree(key);
+
+	nebredis_hm_command_add_field_value(cmd, "downtime_type", NEBREDIS_T_INTEGER, &downtime->downtime_type);
+	nebredis_hm_command_add_field_value(cmd, "host_name", NEBREDIS_T_STR, downtime->host_name);
+	nebredis_hm_command_add_field_value(cmd, "service_description", NEBREDIS_T_STR, downtime->service_description);
+	nebredis_hm_command_add_field_value(cmd, "entry_time", NEBREDIS_T_ULONG, &downtime->entry_time);
+	nebredis_hm_command_add_field_value(cmd, "author_name", NEBREDIS_T_STR, downtime->author_name);
+	nebredis_hm_command_add_field_value(cmd, "comment_data", NEBREDIS_T_STR, downtime->comment_data);
+	nebredis_hm_command_add_field_value(cmd, "start_time", NEBREDIS_T_ULONG, &downtime->start_time);
+	nebredis_hm_command_add_field_value(cmd, "end_time", NEBREDIS_T_ULONG, &downtime->end_time);
+	nebredis_hm_command_add_field_value(cmd, "fixed", NEBREDIS_T_INTEGER, &downtime->fixed);
+	nebredis_hm_command_add_field_value(cmd, "duration", NEBREDIS_T_ULONG, &downtime->duration);
+	nebredis_hm_command_add_field_value(cmd, "triggered_by", NEBREDIS_T_ULONG, &downtime->triggered_by);
+	nebredis_hm_command_add_field_value(cmd, "downtime_id", NEBREDIS_T_ULONG, &downtime->downtime_id);
+	
+	return cmd;
+}

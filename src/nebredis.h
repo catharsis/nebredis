@@ -1,7 +1,6 @@
 #ifndef NEBREDIS_H
 #define NEBREDIS_H
-#include <hiredis/hiredis.h>
-#include <naemon/naemon.h>
+#include "command_fmt.h"
 struct nebredis_server_t;
 
 void nebredis_server_destroy(struct nebredis_server_t * server);
@@ -10,8 +9,10 @@ int nebredis_connect(struct nebredis_server_t * server);
 void nebredis_disconnect(struct nebredis_server_t * server);
 const char *nebredis_server_errstr(struct nebredis_server_t * server);
 
-int nebredis_submit_host_status_data(struct nebredis_server_t * server, nebstruct_host_status_data *ds);
-int nebredis_submit_service_status_data(struct nebredis_server_t * server, nebstruct_service_status_data *ds);
+int nebredis_submit_nebstruct(struct nebredis_server_t * server,
+		struct nebredis_hm_command_t * (*command_format_fn)(void *),
+		void *data);
+
 enum NebredisError {
 	E_PROGRAMMING_ERROR,
 	E_COMMAND_ERROR,
@@ -31,6 +32,5 @@ enum NebredisError nebredis_command(struct nebredis_server_t * server, const cha
 # endif
 #endif
 
-void nebredis_print_reply(redisReply *reply);
 #define NEBREDIS_ERROR(msg) logit(NSLOG_RUNTIME_ERROR, TRUE, "%s (%s): %s\n", "NebRedis", __func__, msg)
 #endif
