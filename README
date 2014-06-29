@@ -1,0 +1,30 @@
+# NebRedis
+
+NebRedis is a NEB (Naemon Event Broker) module which submits status data to Redis. It is a work in progress and
+as such, the keys used, all structure and their contents are all subject to change.
+
+NebRedis inserts the statuses for Naemon objects such as services, hosts, comments and downtimes into a Redis database which
+makes it possible for clients to easily extract data from a running Naemon instance. Indeed, it is also possible to extract the same
+data while restarting the Naemon instance since all client interaction is done directly with Redis, something that is not possible with
+modules that work directly on the in-memory data structures of Naemon. The use of Redis also enables use of existing libraries and clients
+and should in theory also work for clustering status data using Redis Cluster.
+
+I haven't really tried anything other than the most basic operations myself, though, so feedback is very much appreciated and patches are,
+as always, welcome!
+
+In particular, I would like some input on how to structure the data in the Redis database to enable more interesting stories.
+
+# Dependencies
+Naemon Core (http://www.naemon.org)
+Redis (http://redis.io)
+hiredis (https://github.com/redis/hiredis/)
+
+# Installation
+The usual...
+
+./configure && make
+make install
+
+# Configuration
+Just update your naemon.cfg to include the following line:
+broker_module=/path/to/nebredis.so
