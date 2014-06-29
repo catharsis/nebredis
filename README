@@ -16,7 +16,9 @@ In particular, I would like some input on how to structure the data in the Redis
 
 # Dependencies
 Naemon Core (http://www.naemon.org)
+
 Redis (http://redis.io)
+
 hiredis (https://github.com/redis/hiredis/)
 
 # Installation
