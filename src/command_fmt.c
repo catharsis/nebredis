@@ -380,7 +380,7 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_comment(void *comment_
 	char *key = NULL;
 
 	struct nebredis_hm_command_t *cmd = NULL;
-	xasprintf(&key, "comments:%ul", comment->comment_id);
+	xasprintf(&key, "comment:%ul", comment->comment_id);
 
 	cmd = nebredis_hm_command_create(key);
 	xfree(key);
