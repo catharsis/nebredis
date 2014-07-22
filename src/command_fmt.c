@@ -95,7 +95,7 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_program(void * prog_p)
 	struct nebredis_hm_command_t *cmd = NULL;
 	cmd = nebredis_hm_command_create(key);
 	nebredis_hm_command_add_field_value(cmd, "program_start", NEBREDIS_T_ULONG, &prog->program_start);
-	
+
 	nebredis_hm_command_add_field_value(cmd, "pid", NEBREDIS_T_INTEGER, &prog->pid);
 	nebredis_hm_command_add_field_value(cmd, "daemon_mode", NEBREDIS_T_INTEGER, &prog->daemon_mode);
 	nebredis_hm_command_add_field_value(cmd, "last_log_rotation", NEBREDIS_T_ULONG, &prog->last_log_rotation);
@@ -124,7 +124,7 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_host(void *hst_p) {
 	char *key = NULL;
 	struct nebredis_hm_command_t *cmd = NULL;
 	xasprintf(&key, "host:%s", hst->name);
-	cmd = nebredis_hm_command_create(key); 
+	cmd = nebredis_hm_command_create(key);
 	xfree(key);
 	nebredis_hm_command_add_field_value(cmd, "id", NEBREDIS_T_UINT, &hst->id);
 	nebredis_hm_command_add_field_value(cmd, "name", NEBREDIS_T_STR, hst->name);
@@ -238,7 +238,7 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_service(void *svc_p) {
 	xasprintf(&key, "host:%s:service:%s", svc->host_name, svc->description);
 
 	cmd = nebredis_hm_command_create(key);
- 
+
 	xfree(key);
 
 	nebredis_hm_command_add_field_value(cmd, "id", NEBREDIS_T_UINT, &svc->id);
@@ -248,57 +248,57 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_service(void *svc_p) {
 	nebredis_hm_command_add_field_value(cmd, "description", NEBREDIS_T_STR, svc->description);
 
 	nebredis_hm_command_add_field_value(cmd, "display_name", NEBREDIS_T_STR, svc->display_name);
-	nebredis_hm_command_add_field_value(cmd, "check_command", NEBREDIS_T_STR, svc->check_command); 
-	nebredis_hm_command_add_field_value(cmd, "event_handler", NEBREDIS_T_STR, svc->event_handler); 
-	nebredis_hm_command_add_field_value(cmd, "initial_state", NEBREDIS_T_INTEGER, &svc->initial_state); 
-	nebredis_hm_command_add_field_value(cmd, "check_interval", NEBREDIS_T_DBL, &svc->check_interval); 
-	nebredis_hm_command_add_field_value(cmd, "retry_interval", NEBREDIS_T_DBL, &svc->retry_interval); 
-	nebredis_hm_command_add_field_value(cmd, "max_attempts", NEBREDIS_T_INTEGER, &svc->max_attempts); 
-	nebredis_hm_command_add_field_value(cmd, "notification_interval", NEBREDIS_T_DBL, &svc->notification_interval); 
-	nebredis_hm_command_add_field_value(cmd, "first_notification_delay", NEBREDIS_T_DBL, &svc->first_notification_delay); 
-	nebredis_hm_command_add_field_value(cmd, "notification_options", NEBREDIS_T_UINT, &svc->notification_options); 
-	nebredis_hm_command_add_field_value(cmd, "stalking_options", NEBREDIS_T_UINT, &svc->stalking_options); 
-	nebredis_hm_command_add_field_value(cmd, "hourly_value", NEBREDIS_T_UINT, &svc->hourly_value); 
-	nebredis_hm_command_add_field_value(cmd, "is_volatile", NEBREDIS_T_INTEGER, &svc->is_volatile); 
-	nebredis_hm_command_add_field_value(cmd, "notification_period", NEBREDIS_T_STR, svc->notification_period); 
-	nebredis_hm_command_add_field_value(cmd, "check_period", NEBREDIS_T_STR, svc->check_period); 
-	nebredis_hm_command_add_field_value(cmd, "flap_detection_enabled", NEBREDIS_T_INTEGER, &svc->flap_detection_enabled); 
-	nebredis_hm_command_add_field_value(cmd, "low_flap_threshold", NEBREDIS_T_DBL, &svc->low_flap_threshold); 
-	nebredis_hm_command_add_field_value(cmd, "high_flap_threshold", NEBREDIS_T_DBL, &svc->high_flap_threshold); 
-	nebredis_hm_command_add_field_value(cmd, "flap_detection_options", NEBREDIS_T_UINT, &svc->flap_detection_options); 
-	nebredis_hm_command_add_field_value(cmd, "process_performance_data", NEBREDIS_T_INTEGER, &svc->process_performance_data); 
-	nebredis_hm_command_add_field_value(cmd, "check_freshness", NEBREDIS_T_INTEGER, &svc->check_freshness); 
-	nebredis_hm_command_add_field_value(cmd, "freshness_threshold", NEBREDIS_T_INTEGER, &svc->freshness_threshold); 
-	nebredis_hm_command_add_field_value(cmd, "accept_passive_checks", NEBREDIS_T_INTEGER, &svc->accept_passive_checks); 
-	nebredis_hm_command_add_field_value(cmd, "event_handler_enabled", NEBREDIS_T_INTEGER, &svc->event_handler_enabled); 
-	nebredis_hm_command_add_field_value(cmd, "checks_enabled", NEBREDIS_T_INTEGER, &svc->checks_enabled); 
-	nebredis_hm_command_add_field_value(cmd, "check_source", NEBREDIS_T_STR, svc->check_source); 
-	nebredis_hm_command_add_field_value(cmd, "retain_status_information", NEBREDIS_T_INTEGER, &svc->retain_status_information); 
-	nebredis_hm_command_add_field_value(cmd, "retain_nonstatus_information", NEBREDIS_T_INTEGER, &svc->retain_nonstatus_information); 
-	nebredis_hm_command_add_field_value(cmd, "notifications_enabled", NEBREDIS_T_INTEGER, &svc->notifications_enabled); 
-	nebredis_hm_command_add_field_value(cmd, "obsess", NEBREDIS_T_INTEGER, &svc->obsess); 
-	nebredis_hm_command_add_field_value(cmd, "notes", NEBREDIS_T_STR, svc->notes); 
-	nebredis_hm_command_add_field_value(cmd, "notes_url", NEBREDIS_T_STR, svc->notes_url); 
-	nebredis_hm_command_add_field_value(cmd, "action_url", NEBREDIS_T_STR, svc->action_url); 
-	nebredis_hm_command_add_field_value(cmd, "icon_image", NEBREDIS_T_STR, svc->icon_image); 
-	nebredis_hm_command_add_field_value(cmd, "icon_image_alt", NEBREDIS_T_STR, svc->icon_image_alt); 
-	nebredis_hm_command_add_field_value(cmd, "problem_has_been_acknowledged", NEBREDIS_T_INTEGER, &svc->problem_has_been_acknowledged); 
-	nebredis_hm_command_add_field_value(cmd, "acknowledgement_type", NEBREDIS_T_INTEGER, &svc->acknowledgement_type); 
-	nebredis_hm_command_add_field_value(cmd, "host_problem_at_last_check", NEBREDIS_T_INTEGER, &svc->host_problem_at_last_check); 
-	nebredis_hm_command_add_field_value(cmd, "check_type", NEBREDIS_T_INTEGER, &svc->check_type); 
-	nebredis_hm_command_add_field_value(cmd, "current_state", NEBREDIS_T_INTEGER, &svc->current_state); 
-	nebredis_hm_command_add_field_value(cmd, "last_state", NEBREDIS_T_INTEGER, &svc->last_state); 
-	nebredis_hm_command_add_field_value(cmd, "last_hard_state", NEBREDIS_T_INTEGER, &svc->last_hard_state); 
-	nebredis_hm_command_add_field_value(cmd, "plugin_output", NEBREDIS_T_STR, svc->plugin_output); 
-	nebredis_hm_command_add_field_value(cmd, "long_plugin_output", NEBREDIS_T_STR, svc->long_plugin_output); 
-	nebredis_hm_command_add_field_value(cmd, "perf_data", NEBREDIS_T_STR, svc->perf_data); 
-	nebredis_hm_command_add_field_value(cmd, "state_type", NEBREDIS_T_INTEGER, &svc->state_type); 
+	nebredis_hm_command_add_field_value(cmd, "check_command", NEBREDIS_T_STR, svc->check_command);
+	nebredis_hm_command_add_field_value(cmd, "event_handler", NEBREDIS_T_STR, svc->event_handler);
+	nebredis_hm_command_add_field_value(cmd, "initial_state", NEBREDIS_T_INTEGER, &svc->initial_state);
+	nebredis_hm_command_add_field_value(cmd, "check_interval", NEBREDIS_T_DBL, &svc->check_interval);
+	nebredis_hm_command_add_field_value(cmd, "retry_interval", NEBREDIS_T_DBL, &svc->retry_interval);
+	nebredis_hm_command_add_field_value(cmd, "max_attempts", NEBREDIS_T_INTEGER, &svc->max_attempts);
+	nebredis_hm_command_add_field_value(cmd, "notification_interval", NEBREDIS_T_DBL, &svc->notification_interval);
+	nebredis_hm_command_add_field_value(cmd, "first_notification_delay", NEBREDIS_T_DBL, &svc->first_notification_delay);
+	nebredis_hm_command_add_field_value(cmd, "notification_options", NEBREDIS_T_UINT, &svc->notification_options);
+	nebredis_hm_command_add_field_value(cmd, "stalking_options", NEBREDIS_T_UINT, &svc->stalking_options);
+	nebredis_hm_command_add_field_value(cmd, "hourly_value", NEBREDIS_T_UINT, &svc->hourly_value);
+	nebredis_hm_command_add_field_value(cmd, "is_volatile", NEBREDIS_T_INTEGER, &svc->is_volatile);
+	nebredis_hm_command_add_field_value(cmd, "notification_period", NEBREDIS_T_STR, svc->notification_period);
+	nebredis_hm_command_add_field_value(cmd, "check_period", NEBREDIS_T_STR, svc->check_period);
+	nebredis_hm_command_add_field_value(cmd, "flap_detection_enabled", NEBREDIS_T_INTEGER, &svc->flap_detection_enabled);
+	nebredis_hm_command_add_field_value(cmd, "low_flap_threshold", NEBREDIS_T_DBL, &svc->low_flap_threshold);
+	nebredis_hm_command_add_field_value(cmd, "high_flap_threshold", NEBREDIS_T_DBL, &svc->high_flap_threshold);
+	nebredis_hm_command_add_field_value(cmd, "flap_detection_options", NEBREDIS_T_UINT, &svc->flap_detection_options);
+	nebredis_hm_command_add_field_value(cmd, "process_performance_data", NEBREDIS_T_INTEGER, &svc->process_performance_data);
+	nebredis_hm_command_add_field_value(cmd, "check_freshness", NEBREDIS_T_INTEGER, &svc->check_freshness);
+	nebredis_hm_command_add_field_value(cmd, "freshness_threshold", NEBREDIS_T_INTEGER, &svc->freshness_threshold);
+	nebredis_hm_command_add_field_value(cmd, "accept_passive_checks", NEBREDIS_T_INTEGER, &svc->accept_passive_checks);
+	nebredis_hm_command_add_field_value(cmd, "event_handler_enabled", NEBREDIS_T_INTEGER, &svc->event_handler_enabled);
+	nebredis_hm_command_add_field_value(cmd, "checks_enabled", NEBREDIS_T_INTEGER, &svc->checks_enabled);
+	nebredis_hm_command_add_field_value(cmd, "check_source", NEBREDIS_T_STR, svc->check_source);
+	nebredis_hm_command_add_field_value(cmd, "retain_status_information", NEBREDIS_T_INTEGER, &svc->retain_status_information);
+	nebredis_hm_command_add_field_value(cmd, "retain_nonstatus_information", NEBREDIS_T_INTEGER, &svc->retain_nonstatus_information);
+	nebredis_hm_command_add_field_value(cmd, "notifications_enabled", NEBREDIS_T_INTEGER, &svc->notifications_enabled);
+	nebredis_hm_command_add_field_value(cmd, "obsess", NEBREDIS_T_INTEGER, &svc->obsess);
+	nebredis_hm_command_add_field_value(cmd, "notes", NEBREDIS_T_STR, svc->notes);
+	nebredis_hm_command_add_field_value(cmd, "notes_url", NEBREDIS_T_STR, svc->notes_url);
+	nebredis_hm_command_add_field_value(cmd, "action_url", NEBREDIS_T_STR, svc->action_url);
+	nebredis_hm_command_add_field_value(cmd, "icon_image", NEBREDIS_T_STR, svc->icon_image);
+	nebredis_hm_command_add_field_value(cmd, "icon_image_alt", NEBREDIS_T_STR, svc->icon_image_alt);
+	nebredis_hm_command_add_field_value(cmd, "problem_has_been_acknowledged", NEBREDIS_T_INTEGER, &svc->problem_has_been_acknowledged);
+	nebredis_hm_command_add_field_value(cmd, "acknowledgement_type", NEBREDIS_T_INTEGER, &svc->acknowledgement_type);
+	nebredis_hm_command_add_field_value(cmd, "host_problem_at_last_check", NEBREDIS_T_INTEGER, &svc->host_problem_at_last_check);
+	nebredis_hm_command_add_field_value(cmd, "check_type", NEBREDIS_T_INTEGER, &svc->check_type);
+	nebredis_hm_command_add_field_value(cmd, "current_state", NEBREDIS_T_INTEGER, &svc->current_state);
+	nebredis_hm_command_add_field_value(cmd, "last_state", NEBREDIS_T_INTEGER, &svc->last_state);
+	nebredis_hm_command_add_field_value(cmd, "last_hard_state", NEBREDIS_T_INTEGER, &svc->last_hard_state);
+	nebredis_hm_command_add_field_value(cmd, "plugin_output", NEBREDIS_T_STR, svc->plugin_output);
+	nebredis_hm_command_add_field_value(cmd, "long_plugin_output", NEBREDIS_T_STR, svc->long_plugin_output);
+	nebredis_hm_command_add_field_value(cmd, "perf_data", NEBREDIS_T_STR, svc->perf_data);
+	nebredis_hm_command_add_field_value(cmd, "state_type", NEBREDIS_T_INTEGER, &svc->state_type);
 	nebredis_hm_command_add_field_value(cmd, "next_check", NEBREDIS_T_ULONG, &svc->next_check);;
-	nebredis_hm_command_add_field_value(cmd, "should_be_scheduled", NEBREDIS_T_INTEGER, &svc->should_be_scheduled); 
-	nebredis_hm_command_add_field_value(cmd, "last_check", NEBREDIS_T_ULONG, &svc->last_check); 
-	nebredis_hm_command_add_field_value(cmd, "current_attempt", NEBREDIS_T_INTEGER, &svc->current_attempt); 
-	nebredis_hm_command_add_field_value(cmd, "current_event_id", NEBREDIS_T_ULONG, &svc->current_event_id); 
-	nebredis_hm_command_add_field_value(cmd, "last_event_id", NEBREDIS_T_ULONG, &svc->last_event_id); 
+	nebredis_hm_command_add_field_value(cmd, "should_be_scheduled", NEBREDIS_T_INTEGER, &svc->should_be_scheduled);
+	nebredis_hm_command_add_field_value(cmd, "last_check", NEBREDIS_T_ULONG, &svc->last_check);
+	nebredis_hm_command_add_field_value(cmd, "current_attempt", NEBREDIS_T_INTEGER, &svc->current_attempt);
+	nebredis_hm_command_add_field_value(cmd, "current_event_id", NEBREDIS_T_ULONG, &svc->current_event_id);
+	nebredis_hm_command_add_field_value(cmd, "last_event_id", NEBREDIS_T_ULONG, &svc->last_event_id);
 	nebredis_hm_command_add_field_value(cmd, "last_problem_id", NEBREDIS_T_ULONG, &svc->last_problem_id);
 	nebredis_hm_command_add_field_value(cmd, "last_notification", NEBREDIS_T_ULONG, &svc->last_notification);
 	nebredis_hm_command_add_field_value(cmd, "next_notification", NEBREDIS_T_ULONG, &svc->next_notification);
@@ -384,7 +384,7 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_comment(void *comment_
 
 	cmd = nebredis_hm_command_create(key);
 	xfree(key);
-	
+
 	nebredis_hm_command_add_field_value(cmd, "comment_type", NEBREDIS_T_INTEGER, &comment->comment_type);
 	nebredis_hm_command_add_field_value(cmd, "host_name", NEBREDIS_T_STR, comment->host_name);
 	nebredis_hm_command_add_field_value(cmd, "service_description", NEBREDIS_T_STR, comment->service_description);
@@ -425,6 +425,6 @@ struct nebredis_hm_command_t * nebredis_command_format_hm_downtime(void *downtim
 	nebredis_hm_command_add_field_value(cmd, "duration", NEBREDIS_T_ULONG, &downtime->duration);
 	nebredis_hm_command_add_field_value(cmd, "triggered_by", NEBREDIS_T_ULONG, &downtime->triggered_by);
 	nebredis_hm_command_add_field_value(cmd, "downtime_id", NEBREDIS_T_ULONG, &downtime->downtime_id);
-	
+
 	return cmd;
 }
