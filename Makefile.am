@@ -1,5 +1,5 @@
 AM_CPPFLAGS += -I$(top_srcdir) -D_GNU_SOURCE=1 -std=c99 -Wall -Werror
-
+ACLOCAL_AMFLAGS = -I m4
 pkglib_LTLIBRARIES = nebredis.la
 nebredis_la_LDFLAGS = -module -shared
 nebredis_la_LIBADD = -lhiredis
