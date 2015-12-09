@@ -32,5 +32,5 @@ enum NebredisError nebredis_command(struct nebredis_server_t * server, const cha
 # endif
 #endif
 
-#define NEBREDIS_ERROR(msg) logit(NSLOG_RUNTIME_ERROR, TRUE, "%s (%s): %s\n", "NebRedis", __func__, msg)
+#define NEBREDIS_ERROR(msg) nm_log(NSLOG_RUNTIME_ERROR, "%s (%s): %s\n", "NebRedis", __func__, msg)
 #endif

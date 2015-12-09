@@ -1,7 +1,11 @@
 AC_INIT([nebredis], [0.1])
-AM_INIT_AUTOMAKE([subdir-objects -Wall -Werror])
+AM_INIT_AUTOMAKE([foreign subdir-objects -Wall -Werror])
 AM_PROG_AR
 LT_INIT
+
+PKG_CHECK_MODULES([GLIB], [glib-2.0])
+PKG_CHECK_MODULES([HIREDIS], [hiredis])
+PKG_CHECK_MODULES([NAEMON], [naemon])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
