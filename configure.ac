@@ -1,6 +1,6 @@
 AC_INIT([nebredis], [0.1])
 AM_INIT_AUTOMAKE([foreign subdir-objects -Wall -Werror])
-AM_PROG_AR
+m4_pattern_allow([AM_PROG_AR], [AM_PROG_AR])
 LT_INIT
 
 PKG_CHECK_MODULES([GLIB], [glib-2.0])
